@@ -9,12 +9,12 @@ import static org.mockito.Mockito.*;
 
 class PrintRequestServiceTest {
 
-    // ✅ Test 1: Business rule
+    
     @Test
     void paperlessUserCannotRequestPrint() {
-        PaymentGateway stubPay = (userId, amount) -> true; // stub
+        PaymentGateway stubPay = (userId, amount) -> true; 
         NotificationSender stubNotify = (userId, msg) -> {
-        }; // stub
+        }; 
 
         PrintRequestService service = new PrintRequestService(stubPay, stubNotify);
 
@@ -22,7 +22,7 @@ class PrintRequestServiceTest {
                 () -> service.requestPrintedCopy("U1", "S1", new UserPreference(true)));
     }
 
-    // ✅ Test 2: MOCK (Mockito)
+    
     @Test
     void paymentSuccessCreatesPrintRequestAndSendsNotification() {
         PaymentGateway payMock = mock(PaymentGateway.class);
@@ -40,10 +40,10 @@ class PrintRequestServiceTest {
         verify(notifyMock).send(eq("U1"), contains("S100"));
     }
 
-    // ✅ Test 3: STUB (payment fails)
+    
     @Test
     void paymentFailureStopsRequest() {
-        PaymentGateway failingStub = (userId, amount) -> false; // stub
+        PaymentGateway failingStub = (userId, amount) -> false; 
         NotificationSender notifyMock = mock(NotificationSender.class);
 
         PrintRequestService service = new PrintRequestService(failingStub, notifyMock);
