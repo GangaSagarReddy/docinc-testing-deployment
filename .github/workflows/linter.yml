@@ -1,0 +1,23 @@
+name: Linter (Checkstyle)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Run Checkstyle (allowed to fail)
+        run: |
+          java -jar tools/checkstyle.jar -c checkstyle.xml src || true
